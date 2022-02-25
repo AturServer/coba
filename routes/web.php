@@ -25,10 +25,9 @@ Route::get('/user/pos', [UserController::class, 'pos']);
 //Post
 use App\Http\Controllers\PostController;
 Route::get('/post', [PostController::class, 'index']);
-Route::post('/post/post', [PostController::class, 'post']);
+Route::post('/post/action', [PostController::class, 'action']);
 Route::get('/post/edit/{id}',[PostController::class, 'edit']);
 //
 Route::get('/greeting', function () {   
     return 'Hello World';
 }); 
-

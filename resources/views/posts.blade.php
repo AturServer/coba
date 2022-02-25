@@ -9,15 +9,25 @@
 </head>
 <body>
     <div class="container">
-        <h1> Halaman User {{ $title }}</h1>
+        <h1> Halaman {{ $title }}</h1>
         <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
+<button type="button rounded-0" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+Add Data
 </button>
+{{-- menampilkan error validasi --}}
+  @if (count($errors) > 0)
+    <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+       @endforeach
+     </ul>
+     </div>
+   @endif
 @if (session('status'))
 <p class="fs-1 text-success">{{ session('status') }}</p>    
 @endif
-<form method="post" action="/post/post">
+<form method="post" action="/post/action">
      {{ csrf_field() }}
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -63,19 +73,19 @@
         foreach ($listUser as $row) {?>
          
            <tr>
-                   <td>{{ $no }}</td>
+                   <td style="font-size:small;">{{ $no }}.{{ $row->created_at }}.{{ $row->updated_at }}</td>
                    <td>{{ $row->title }}</td>
-                  <td style="text-align:justify" >
+                   <td style="text-align:justify;max-width:300px;" >
                     <div class="text-wrap col-12">{{ $row->description }}
                     </div>
-                </td>
+                  </td>
                   <td>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#id{{ $row->id }}">
-  Launch static backdrop modal
+<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#id{{ $row->id }}">
+ Edit
 </button>
 
 
-                    <form method="post" action="/post/post">
+<form method="post" action="/post/action">
      {{ csrf_field() }}
 <!-- Modal -->
 <div class="modal fade bg-dark" id="id{{ $row->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -86,10 +96,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+         <input class="form-control" name="id" value="{{ $row->id}}" type="hidden" hidden>
+
           <label>Title</label>
-          <input class="form-control" name="title">
+          <input class="form-control" name="title" value="{{ $row->title }}">
           <label>Description</label>
-       <textarea class="form-control" name="description"></textarea>
+       <textarea class="form-control" name="description" row="20">{{ $row->description }}</textarea>
       </div>
       <div class="modal-footer">
         

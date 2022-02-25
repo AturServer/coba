@@ -80,8 +80,10 @@ return [
     |
     */
 
-    'locale' => 'en',
-
+   //GANTI 'locale' => 'en',
+    'timezone' => 'Asia/Jakarta',
+    'locale' => 'id',
+    'faker_locale' => 'id_ID',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -93,7 +95,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+   //GANTI 'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +108,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    //GANTI 'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------

@@ -15,9 +15,12 @@ class PostController extends Controller
        
     }
 
-    public function post(Request $request){
+    public function action(Request $request){
    if(isset($_POST['btnSave'])){
-      
+    $this->validate($request,[
+    'title' => 'required|min:5|max:20',
+    'description' => 'required', 
+    ]);
     $save=Post::create([
     		'title'=>$request->title,  
             'description'=>$request->description,       
@@ -31,7 +34,27 @@ class PostController extends Controller
             echo'GAGAL';
         }
     }
-    return redirect('post')->with('status', 'Dikembalikan tujuan salah !!!');
+    //click btn update
+    if(isset($_POST['btnUpdate'])){
+    $id= $request->id;
+    $post = Post::findOrFail($id);
+
+    $saveUpdate=$post->update([
+    'title'=>$request->title,
+    'description'=>$request->description,
+    'updated_at'=>date('Y-m-d H:i:s')
+    ]);
+
+
+    if($saveUpdate==true){
+    return redirect('post')->with('status', 'Update Success !!!');
+    }
+    else{
+    echo'GAGAL';
+    }
+    }
+    
+    return redirect('post')->with('status', 'No Action !!!');
     /*
     $data = array(
     array(          
